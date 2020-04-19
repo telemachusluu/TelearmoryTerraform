@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: spinnaker
+    source: demo
+    stack: frontend
+  name: spinnaker-demo
+  namespace: sales-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spinnaker
+      source: demo
+  template:
+    metadata:
+      labels:
+        app: spinnaker
+        source: demo
+    spec:
+      containers:
+        - image: 'telemachusluu/nginx:monday'
+          name: primary
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
